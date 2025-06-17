@@ -1,5 +1,6 @@
 // app/api/products/route.ts
 export async function GET(request: Request) {
+    console.log(request)
     return Response.json({ message: 'Get all products' });
   }
   

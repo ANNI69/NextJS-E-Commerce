@@ -39,7 +39,7 @@ export default function HomePage() {
             </div>
             <div className="bg-pink-400 border-2 sm:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6 text-center">
               <h2 className="text-xl sm:text-2xl font-black text-black mb-2 sm:mb-4">24/7 SUPPORT</h2>
-              <p className="text-sm sm:text-base font-bold text-black">We're here to help</p>
+              <p className="text-sm sm:text-base font-bold text-black">We are here to help</p>
             </div>
           </div>
         </main>

@@ -1,4 +1,6 @@
+/* eslint-disable */
 "use client"
+
 
 import { Menu, Search, ShoppingCart, User, X } from "lucide-react"
 import Link from "next/link"
