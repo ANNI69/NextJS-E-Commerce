@@ -3,7 +3,7 @@ import { AppProviders } from "@/context"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'E-Commerce App',
+  title: 'BRUTESHOP',
   description: 'A modern e-commerce application built with Next.js and TypeScript',
 };
 
