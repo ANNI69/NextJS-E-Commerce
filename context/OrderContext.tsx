@@ -1,7 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
-import { Order, Address } from '@/types'; // Import your types
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { Order } from '@/types'; // Import your types
 
 interface OrderContextType {
   orders: Order[];
