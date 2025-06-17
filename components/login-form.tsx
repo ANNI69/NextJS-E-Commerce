@@ -85,7 +85,7 @@ export default function LoginForm() {
         <SubmitButton />
 
         <div className="text-center text-gray-400">
-          Don't have an account?{" "}
+          Dont have an account?{" "}
           <Link href="/auth/sign-up" className="text-white hover:underline">
             Sign up
           </Link>
