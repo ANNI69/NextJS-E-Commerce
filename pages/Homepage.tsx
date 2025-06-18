@@ -3,7 +3,7 @@ import Navbar from "@/components/navbar";
 
 export default function HomePage() {
     return (
-        <div>
+        <div className="w-screen">
         <Navbar />
         <main className="max-w-7xl mx-auto py-4 sm:py-6 px-6 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-pink-400 via-yellow-400 to-cyan-400 p-4 sm:p-8 border-2 sm:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-6 sm:mb-8">

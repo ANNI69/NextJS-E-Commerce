@@ -21,11 +21,11 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white mt-12 sm:mt-16">
       {/* Main Footer Content */}
-      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 border-t-4 sm:border-t-8 border-black">
+      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 border-t-4 sm:border-t-8 border-black justify-center items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-4">
             {/* Company Info */}
-            <div className="bg-cyan-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6">
+            <div className="bg-cyan-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6 w-full">
               <h3 className="text-2xl sm:text-3xl font-black text-black mb-3 sm:mb-4">BRUTESHOP</h3>
               <p className="text-sm sm:text-base font-bold text-black mb-4">
                 The most BRUTAL shopping experience online. We deliver quality products with an attitude!
@@ -47,7 +47,7 @@ export default function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div className="bg-lime-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6">
+            <div className="bg-lime-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6 w-full">
               <h4 className="text-lg sm:text-xl font-black text-black mb-3 sm:mb-4">QUICK LINKS</h4>
               <ul className="space-y-2">
                 {["SHOP", "CATEGORIES", "DEALS", "NEW ARRIVALS", "BEST SELLERS", "ABOUT US"].map((link) => (
@@ -64,7 +64,7 @@ export default function Footer() {
             </div>
 
             {/* Customer Service */}
-            <div className="bg-orange-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6">
+            <div className="bg-orange-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6 w-full">
               <h4 className="text-lg sm:text-xl font-black text-black mb-3 sm:mb-4">CUSTOMER SERVICE</h4>
               <ul className="space-y-2">
                 {["CONTACT US", "SHIPPING INFO", "RETURNS", "SIZE GUIDE", "FAQ", "TRACK ORDER"].map((link) => (
@@ -81,7 +81,7 @@ export default function Footer() {
             </div>
 
             {/* Newsletter */}
-            <div className="bg-pink-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6">
+            <div className="bg-pink-400 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6 w-full">
               <h4 className="text-lg sm:text-xl font-black text-black mb-3 sm:mb-4">STAY BRUTAL</h4>
               <p className="text-sm sm:text-base font-bold text-black mb-4">Get the latest deals and brutal updates!</p>
               <form onSubmit={handleNewsletterSubmit} className="space-y-3">
