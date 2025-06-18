@@ -22,8 +22,8 @@ export default function Component() {
   const toggleCart = () => setIsCartOpen(!isCartOpen)
 
   return (
-    <nav className="bg-yellow-400 border-b-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-yellow-400 border-b-4 border-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -110,7 +110,7 @@ export default function Component() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden mr-2">
             <Button
               onClick={toggleMenu}
               className="bg-red-500 hover:bg-red-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
@@ -124,7 +124,7 @@ export default function Component() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-yellow-300 border-t-4 border-black">
-          <div className="px-4 pt-4 pb-4 space-y-3">
+          <div className="px-6 pt-4 pb-4 space-y-3">
             <Link
               href="/shop"
               className="block bg-pink-500 text-black px-6 py-4 font-bold border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-center text-lg"
