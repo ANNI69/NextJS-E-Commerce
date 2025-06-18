@@ -13,7 +13,7 @@ export const isSupabaseConfigured =
 
 // Create a cached version of the Supabase client for Server Components
 export const createClient = cache(async () => {
-  const cookieStore = await cookies()
+  const cookieStore = cookies()
 
   if (!isSupabaseConfigured) {
     console.warn("Supabase environment variables are not set. Using dummy client.")
