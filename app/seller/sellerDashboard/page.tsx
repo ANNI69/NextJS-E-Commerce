@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState, useEffect } from "react"
 import {
   Store,
-  Package,
+
   DollarSign,
-  Users,
+
   ShoppingCart,
   Eye,
   Edit,
@@ -178,9 +180,8 @@ export default function SellerDashboard() {
             <Button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`${
-                activeTab === tab ? "bg-lime-400 hover:bg-lime-500" : "bg-white hover:bg-gray-100"
-              } text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all text-sm sm:text-base px-3 sm:px-4 py-2 capitalize`}
+              className={`${activeTab === tab ? "bg-lime-400 hover:bg-lime-500" : "bg-white hover:bg-gray-100"
+                } text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all text-sm sm:text-base px-3 sm:px-4 py-2 capitalize`}
             >
               {tab}
             </Button>

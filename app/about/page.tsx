@@ -82,7 +82,7 @@ export default function AboutPage() {
             </p>
             <p className="text-sm sm:text-base font-bold text-black mb-4">
               What started as a small collection of statement pieces has grown into a global movement. We believe that
-              your style should reflect your attitude, and our products are designed for those who aren't afraid to
+              your style should reflect your attitude, and our products are designed for those who are not afraid to
               stand out.
             </p>
             <p className="text-sm sm:text-base font-bold text-black">
@@ -96,7 +96,7 @@ export default function AboutPage() {
               alt="Our story"
               className="w-full h-64 sm:h-80 object-cover border-2 border-black mb-4"
             />
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grifd-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl sm:text-3xl font-black text-black">50K+</div>
                 <div className="text-xs sm:text-sm font-bold text-black">CUSTOMERS</div>
@@ -166,8 +166,8 @@ export default function AboutPage() {
           <Target className="h-12 w-12 sm:h-16 sm:w-16 text-black mx-auto mb-4 sm:mb-6" />
           <h2 className="text-2xl sm:text-3xl font-black text-black mb-4 sm:mb-6">OUR BRUTAL MISSION</h2>
           <p className="text-base sm:text-xl font-bold text-black max-w-4xl mx-auto">
-            "To empower individuals to express their authentic selves through bold, uncompromising fashion that
-            challenges the status quo and celebrates the beauty of being brutally honest about who you are."
+            To empower individuals to express their authentic selves through bold, uncompromising fashion that
+            challenges the status quo and celebrates the beauty of being brutally honest about who you are.
           </p>
         </div>
       </main>
