@@ -6,6 +6,7 @@ import { Menu, Search, ShoppingCart, User, X } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useCart } from "@/context"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,6 +18,7 @@ export default function Component() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("")
   const router = useRouter()
+  const { cartCount } = useCart()
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
@@ -112,7 +114,7 @@ export default function Component() {
             >
               <ShoppingCart className="h-4 w-4" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border border-black">
-                3
+                {cartCount}
               </span>
             </Button>
 
@@ -183,7 +185,7 @@ export default function Component() {
                 className="w-full bg-green-500 hover:bg-green-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all relative py-4 text-lg"
               >
                 <ShoppingCart className="h-5 w-5 mr-2" />
-                CART (3)
+                CART ({cartCount})
               </Button>
               <Link href="/profile" className="w-full">
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all py-4 text-lg">

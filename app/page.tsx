@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/server";
 import { redirect } from "next/navigation";
-import HomePage from "@/pages/Homepage";
+import HomePage from "@/components/Homepage";
 
 export default async function Home() {
   const supabase = await createClient();
