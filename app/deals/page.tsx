@@ -38,7 +38,7 @@ const deals = [
     originalPrice: 199.99,
     salePrice: 149.99,
     discount: 25,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.postimg.cc/CxH0Sj3D/Chat-GPT-Image-Jul-2-2025-04-57-18-PM.png",
     endTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
     category: "Limited Time",
     rating: 4.9,
@@ -50,7 +50,7 @@ const deals = [
     originalPrice: 299.99,
     salePrice: 199.99,
     discount: 33,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.postimg.cc/zfHnyFrt/Chat-GPT-Image-Jul-2-2025-05-14-20-PM.png",
     endTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
     category: "Weekly Deal",
     rating: 4.7,
@@ -132,7 +132,7 @@ export default function DealsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
             <div>
               <img
-                src="/placeholder.svg?height=400&width=400"
+                src="https://i.postimg.cc/Njx3WQXk/Chat-GPT-Image-Jul-2-2025-04-51-32-PM.png"
                 alt="Deal of the day"
                 className="w-full h-64 sm:h-80 object-cover border-4 border-black"
               />

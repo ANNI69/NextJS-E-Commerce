@@ -7,28 +7,28 @@ const teamMembers = [
   {
     name: "ALEX BRUTAL",
     role: "CEO & FOUNDER",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/DgfVBSbs/46.png",
     bio: "Visionary behind the brutal revolution in fashion.",
     color: "bg-pink-500",
   },
   {
     name: "SARAH NEON",
     role: "CREATIVE DIRECTOR",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/q3dyQt26/50.png",
     bio: "Master of brutal aesthetics and bold designs.",
     color: "bg-cyan-400",
   },
   {
     name: "MIKE CYBER",
     role: "HEAD OF TECH",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/qMyxfrSW/42.png",
     bio: "Building the most brutal shopping experience.",
     color: "bg-lime-400",
   },
   {
     name: "LUNA FIERCE",
     role: "BRAND MANAGER",
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/xqnyBzSP/Avatar-25.png",
     bio: "Spreading the brutal message worldwide.",
     color: "bg-orange-400",
   },
@@ -92,7 +92,7 @@ export default function AboutPage() {
           </div>
           <div className="bg-pink-500 border-2 sm:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-8">
             <img
-              src="/placeholder.svg?height=400&width=500"
+              src="https://i.ibb.co/zT42QZy3/Chat-GPT-Image-Jul-2-2025-05-55-26-PM.png"
               alt="Our story"
               className="w-full h-64 sm:h-80 object-cover border-2 border-black mb-4"
             />
@@ -151,7 +151,7 @@ export default function AboutPage() {
                 <img
                   src={member.image || "/placeholder.svg"}
                   alt={member.name}
-                  className="w-full h-48 sm:h-64 object-cover border-2 border-black mb-4"
+                  className="w-full h-48 sm:h-64 object-cover mb-4"
                 />
                 <h3 className="text-lg sm:text-xl font-black text-black mb-1">{member.name}</h3>
                 <p className="text-sm sm:text-base font-bold text-black mb-2">{member.role}</p>
