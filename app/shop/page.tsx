@@ -30,7 +30,7 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setSearchQuery(searchParams.get("q") || "")
+    setSearchQuery(searchParams?.get("q") || "")
   }, [searchParams])
 
   useEffect(() => {
