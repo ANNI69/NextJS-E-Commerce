@@ -14,7 +14,7 @@ const deals = [
     originalPrice: 129.99,
     salePrice: 79.99,
     discount: 38,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/tML50rJd/Chat-GPT-Image-Jul-2-2025-10-29-50-PM.png",
     endTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
     category: "Flash Sale",
     rating: 4.8,
@@ -26,7 +26,7 @@ const deals = [
     originalPrice: 89.99,
     salePrice: 59.99,
     discount: 33,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "https://i.ibb.co/Pzh0Jmks/Chat-GPT-Image-Jul-2-2025-10-31-50-PM.png",
     endTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
     category: "Bundle Deal",
     rating: 4.6,
