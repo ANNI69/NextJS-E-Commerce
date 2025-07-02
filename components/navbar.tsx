@@ -5,6 +5,7 @@
 import { Menu, Search, ShoppingCart, User, X } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,20 +14,31 @@ import CartSidebar from "@/components/cart-items"
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState("")
+  const router = useRouter()
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen)
-
-  const [isCartOpen, setIsCartOpen] = useState(false)
-
   const toggleCart = () => setIsCartOpen(!isCartOpen)
+
+  // Handle search submit
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchValue.trim()) {
+      router.push(`/shop?q=${encodeURIComponent(searchValue.trim())}`)
+      setIsSearchOpen(false)
+      setSearchValue("")
+    }
+  }
 
   return (
     <nav className="bg-yellow-400 border-b-4 border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex items-center space-x-2">
+            <img src="/Hover.ico" alt="logo" width={30} height={30} />
             <Link href="/" className="text-2xl font-black text-black hover:text-white transition-colors">
               BRUTESHOP
             </Link>
@@ -67,19 +79,22 @@ export default function Component() {
             {/* Search */}
             <div className="relative">
               {isSearchOpen ? (
-                <div className="flex items-center">
+                <form className="flex items-center" onSubmit={handleSearchSubmit}>
                   <Input
                     type="text"
                     placeholder="SEARCH..."
+                    value={searchValue}
+                    onChange={e => setSearchValue(e.target.value)}
                     className="w-48 bg-white border-2 border-black font-bold placeholder:text-gray-600 focus:ring-0 focus:border-black"
                   />
                   <Button
+                    type="button"
                     onClick={toggleSearch}
                     className="ml-2 bg-red-500 hover:bg-red-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                   >
                     <X className="h-4 w-4" />
                   </Button>
-                </div>
+                </form>
               ) : (
                 <Button
                   onClick={toggleSearch}
@@ -151,13 +166,15 @@ export default function Component() {
             </Link>
 
             {/* Mobile Search */}
-            <div className="pt-2">
+            <form className="pt-2" onSubmit={handleSearchSubmit}>
               <Input
                 type="text"
                 placeholder="SEARCH..."
+                value={searchValue}
+                onChange={e => setSearchValue(e.target.value)}
                 className="w-full bg-white border-2 border-black font-bold placeholder:text-gray-600 focus:ring-0 focus:border-black py-4 text-lg"
               />
-            </div>
+            </form>
 
             {/* Mobile Actions */}
             <div className="grid grid-cols-1 gap-3 pt-2">

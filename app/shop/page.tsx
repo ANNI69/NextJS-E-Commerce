@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Search, Grid, List, Star } from "lucide-react"
 
 import Navbar from "@/components/navbar"
@@ -13,13 +14,21 @@ const categories = ["All", "Clothing", "Footwear", "Accessories", "Electronics",
 const sortOptions = ["Featured", "Price: Low to High", "Price: High to Low", "Rating", "Newest"]
 
 export default function Page() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [sortBy, setSortBy] = useState("Featured")
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const [searchQuery, setSearchQuery] = useState("")
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const initialQuery = searchParams?.get("q") || "";
+
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("Featured");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [searchQuery, setSearchQuery] = useState(initialQuery)
   const [products, setProducts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setSearchQuery(searchParams.get("q") || "")
+  }, [searchParams])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,6 +64,12 @@ export default function Page() {
     filteredProducts = filteredProducts.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
   }
 
+  // When user types in search box, update URL
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+    router.replace(`/shop?q=${encodeURIComponent(e.target.value)}`)
+  }
+
   return (
     <div>
       <Navbar />
@@ -74,7 +89,7 @@ export default function Page() {
                 type="text"
                 placeholder="SEARCH PRODUCTS..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearchChange}
                 className="w-full pl-10 bg-white border-2 border-black font-bold text-black placeholder:text-gray-600 focus:ring-0 focus:border-black"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-600" />
