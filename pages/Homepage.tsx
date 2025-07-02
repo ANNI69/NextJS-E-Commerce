@@ -3,35 +3,30 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { useCart } from "@/context";
-
-const PRODUCTS = [
-  {
-    id: "1",
-    name: "BRUTAL PRODUCT 1",
-    description: "A brutal product.",
-    price: 99.99,
-    image: "/hoodie.jpg",
-    category: "hoodie",
-    stock: 10,
-    rating: 5,
-    reviews: 10,
-  },
-  {
-    id: "2",
-    name: "BRUTAL PRODUCT 2",
-    description: "A brutal product.",
-    price: 99.99,
-    image: "/hoodie.jpg",
-    category: "hoodie",
-    stock: 10,
-    rating: 5,
-    reviews: 10,
-  },
-  // ...add more as needed
-];
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/client";
 
 export default function HomePage() {
   const { addToCart } = useCart();
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      const { data, error } = await supabase.from("products").select("*").order("created_at", { ascending: false });
+      if (error) {
+        setError(error.message);
+        setProducts([]);
+      } else {
+        setProducts(data || []);
+      }
+      setLoading(false);
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div className="w-screen">
@@ -42,28 +37,34 @@ export default function HomePage() {
           <p className="text-base sm:text-xl font-bold text-black">The most BRUTAL shopping experience online!</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {PRODUCTS.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white border-2 sm:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6"
-            >
-              <img
-                src={product.image}
-                alt="Product"
-                className=" bg-black w-full h-32 sm:h-48 object-cover border-2 border-black mb-3 sm:mb-4"
-              />
-              <h3 className="text-lg sm:text-xl font-black text-black mb-2">{product.name}</h3>
-              <p className="text-base sm:text-lg font-bold text-black mb-3 sm:mb-4">${product.price}</p>
-              <button
-                className="w-full bg-orange-500 hover:bg-orange-600 text-black py-2 sm:py-3 text-sm sm:text-base font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] sm:hover:translate-x-[2px] sm:hover:translate-y-[2px] transition-all"
-                onClick={() => addToCart(product)}
+        {loading ? (
+          <div className="text-center py-8">Loading products...</div>
+        ) : error ? (
+          <div className="text-center py-8 text-red-600">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white border-2 sm:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6"
               >
-                ADD TO CART
-              </button>
-            </div>
-          ))}
-        </div>
+                <img
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  className=" bg-black w-full h-32 sm:h-48 object-cover border-2 border-black mb-3 sm:mb-4"
+                />
+                <h3 className="text-lg sm:text-xl font-black text-black mb-2">{product.name}</h3>
+                <p className="text-base sm:text-lg font-bold text-black mb-3 sm:mb-4">${product.price}</p>
+                <button
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-black py-2 sm:py-3 text-sm sm:text-base font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] sm:hover:translate-x-[2px] sm:hover:translate-y-[2px] transition-all"
+                  onClick={() => addToCart(product)}
+                >
+                  ADD TO CART
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Additional sections for better mobile experience */}
         <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">

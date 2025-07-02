@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Store,
   Package,
@@ -20,6 +20,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Footer from "../../../components/footer"
+import AddProductForm from "@/components/add-product-form"
+import { supabase } from "@/lib/client"
 
 const stats = [
   {
@@ -28,86 +30,7 @@ const stats = [
     change: "+15%",
     icon: DollarSign,
     color: "bg-green-500",
-  },
-  {
-    title: "PRODUCTS",
-    value: "156",
-    change: "+8",
-    icon: Package,
-    color: "bg-blue-500",
-  },
-  {
-    title: "ORDERS",
-    value: "89",
-    change: "+23%",
-    icon: ShoppingCart,
-    color: "bg-purple-500",
-  },
-  {
-    title: "CUSTOMERS",
-    value: "234",
-    change: "+12%",
-    icon: Users,
-    color: "bg-pink-500",
-  },
-]
-
-const products = [
-  {
-    id: 1,
-    name: "BRUTAL SNEAKERS",
-    price: 89.99,
-    stock: 45,
-    status: "Active",
-    category: "Footwear",
-    sales: 156,
-    image: "/placeholder.svg?height=60&width=60",
-    createdAt: "2024-01-15",
-  },
-  {
-    id: 2,
-    name: "NEON HOODIE",
-    price: 59.99,
-    stock: 23,
-    status: "Active",
-    category: "Clothing",
-    sales: 89,
-    image: "/placeholder.svg?height=60&width=60",
-    createdAt: "2024-01-10",
-  },
-  {
-    id: 3,
-    name: "CYBER BACKPACK",
-    price: 129.99,
-    stock: 0,
-    status: "Out of Stock",
-    category: "Accessories",
-    sales: 234,
-    image: "/placeholder.svg?height=60&width=60",
-    createdAt: "2024-01-05",
-  },
-  {
-    id: 4,
-    name: "BRUTAL T-SHIRT",
-    price: 29.99,
-    stock: 67,
-    status: "Active",
-    category: "Clothing",
-    sales: 123,
-    image: "/placeholder.svg?height=60&width=60",
-    createdAt: "2024-01-20",
-  },
-  {
-    id: 5,
-    name: "NEON PANTS",
-    price: 79.99,
-    stock: 12,
-    status: "Low Stock",
-    category: "Clothing",
-    sales: 78,
-    image: "/placeholder.svg?height=60&width=60",
-    createdAt: "2024-01-12",
-  },
+  }
 ]
 
 const orders = [
@@ -120,47 +43,7 @@ const orders = [
     status: "Processing",
     date: "2024-01-25",
     address: "123 Brutal St, NYC",
-  },
-  {
-    id: "ORD-002",
-    customer: "Sarah Neon",
-    email: "sarah@example.com",
-    products: ["CYBER BACKPACK"],
-    total: 129.99,
-    status: "Shipped",
-    date: "2024-01-24",
-    address: "456 Cyber Ave, LA",
-  },
-  {
-    id: "ORD-003",
-    customer: "Mike Cyber",
-    email: "mike@example.com",
-    products: ["BRUTAL T-SHIRT", "NEON PANTS"],
-    total: 109.98,
-    status: "Delivered",
-    date: "2024-01-23",
-    address: "789 Neon Blvd, SF",
-  },
-  {
-    id: "ORD-004",
-    customer: "Luna Fierce",
-    email: "luna@example.com",
-    products: ["BRUTAL SNEAKERS"],
-    total: 89.99,
-    status: "Pending",
-    date: "2024-01-25",
-    address: "321 Fierce Rd, Miami",
-  },
-  {
-    id: "ORD-005",
-    customer: "Alex Storm",
-    email: "alex@example.com",
-    products: ["NEON HOODIE", "BRUTAL T-SHIRT"],
-    total: 89.98,
-    status: "Processing",
-    date: "2024-01-24",
-    address: "654 Storm St, Chicago",
-  },
+  }
 ]
 
 const analyticsData = {
@@ -191,6 +74,26 @@ export default function SellerDashboard() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedStatus, setSelectedStatus] = useState("All")
+  const [addProductOpen, setAddProductOpen] = useState(false)
+  const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true)
+      setError(null)
+      const { data, error } = await supabase.from("products").select("*").order("created_at", { ascending: false })
+      if (error) {
+        setError(error.message)
+        setProducts([])
+      } else {
+        setProducts(data || [])
+      }
+      setLoading(false)
+    }
+    fetchProducts()
+  }, [])
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -229,8 +132,29 @@ export default function SellerDashboard() {
     }
   }
 
+  // Handler for successful product addition
+  const handleProductAdded = () => {
+    // Refetch products after adding
+    setLoading(true)
+    setError(null)
+    supabase.from("products").select("*").order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (error) {
+          setError(error.message)
+          setProducts([])
+        } else {
+          setProducts(data || [])
+        }
+        setLoading(false)
+      })
+    setAddProductOpen(false)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-400 via-pink-400 to-cyan-400">
+      {/* Add Product Modal */}
+      <AddProductForm isOpen={addProductOpen} onClose={() => setAddProductOpen(false)} onSuccess={handleProductAdded} />
+
       {/* Header */}
       <div className="bg-black border-b-4 border-white p-4 sm:p-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -292,36 +216,42 @@ export default function SellerDashboard() {
             <div className="bg-white border-2 sm:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-xl sm:text-2xl font-black text-black">RECENT PRODUCTS</h2>
-                <Button className="bg-green-500 hover:bg-green-600 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all text-sm px-3 py-2">
+                <Button className="bg-green-500 hover:bg-green-600 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all text-sm px-3 py-2" onClick={() => setAddProductOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   ADD PRODUCT
                 </Button>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
-                {products.slice(0, 3).map((product) => (
-                  <div key={product.id} className="flex items-center gap-4 p-3 sm:p-4 border-2 border-black bg-gray-50">
-                    <img
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.name}
-                      className="w-12 h-12 sm:w-16 sm:h-16 object-cover border-2 border-black"
-                    />
-                    <div className="flex-1">
-                      <h3 className="text-sm sm:text-base font-black text-black">{product.name}</h3>
-                      <p className="text-xs sm:text-sm font-bold text-gray-600">
-                        Price: ${product.price} | Stock: {product.stock}
-                      </p>
+              {loading ? (
+                <div className="text-center py-8">Loading products...</div>
+              ) : error ? (
+                <div className="text-center py-8 text-red-600">{error}</div>
+              ) : (
+                <div className="space-y-3 sm:space-y-4">
+                  {products.slice(0, 3).map((product) => (
+                    <div key={product.id} className="flex items-center gap-4 p-3 sm:p-4 border-2 border-black bg-gray-50">
+                      <img
+                        src={product.image || "/placeholder.svg"}
+                        alt={product.name}
+                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover border-2 border-black"
+                      />
+                      <div className="flex-1">
+                        <h3 className="text-sm sm:text-base font-black text-black">{product.name}</h3>
+                        <p className="text-xs sm:text-sm font-bold text-gray-600">
+                          Price: ${product.price} | Stock: {product.stock}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-xs font-bold px-2 py-1 border border-black ${getStatusColor(product.status)}`}
+                        >
+                          {product.status}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`text-xs font-bold px-2 py-1 border border-black ${getStatusColor(product.status)}`}
-                      >
-                        {product.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -366,7 +296,7 @@ export default function SellerDashboard() {
                     <option value="Low Stock">LOW STOCK</option>
                   </select>
 
-                  <Button className="bg-green-500 hover:bg-green-600 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                  <Button className="bg-green-500 hover:bg-green-600 text-black font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all" onClick={() => setAddProductOpen(true)}>
                     <Plus className="h-4 w-4 mr-2" />
                     ADD PRODUCT
                   </Button>
@@ -376,64 +306,70 @@ export default function SellerDashboard() {
 
             {/* Products Table */}
             <div className="bg-white border-2 sm:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-pink-500 border-b-2 border-black">
-                    <tr>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">PRODUCT</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">CATEGORY</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">PRICE</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">STOCK</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">SALES</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">STATUS</th>
-                      <th className="text-left p-3 sm:p-4 font-black text-black">ACTIONS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredProducts.map((product) => (
-                      <tr key={product.id} className="border-b border-gray-200">
-                        <td className="p-3 sm:p-4">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={product.image || "/placeholder.svg"}
-                              alt={product.name}
-                              className="w-10 h-10 sm:w-12 sm:h-12 object-cover border-2 border-black"
-                            />
-                            <div>
-                              <h3 className="text-sm sm:text-base font-black text-black">{product.name}</h3>
-                              <p className="text-xs text-gray-600">ID: {product.id}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.category}</td>
-                        <td className="p-3 sm:p-4 text-sm font-bold text-black">${product.price}</td>
-                        <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.stock}</td>
-                        <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.sales}</td>
-                        <td className="p-3 sm:p-4">
-                          <span
-                            className={`text-xs font-bold px-2 py-1 border border-black ${getStatusColor(product.status)}`}
-                          >
-                            {product.status}
-                          </span>
-                        </td>
-                        <td className="p-3 sm:p-4">
-                          <div className="flex gap-1">
-                            <Button className="bg-blue-400 hover:bg-blue-500 text-black border border-black p-1">
-                              <Eye className="h-3 w-3" />
-                            </Button>
-                            <Button className="bg-yellow-400 hover:bg-yellow-500 text-black border border-black p-1">
-                              <Edit className="h-3 w-3" />
-                            </Button>
-                            <Button className="bg-red-400 hover:bg-red-500 text-black border border-black p-1">
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </td>
+              {loading ? (
+                <div className="text-center py-8">Loading products...</div>
+              ) : error ? (
+                <div className="text-center py-8 text-red-600">{error}</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-pink-500 border-b-2 border-black">
+                      <tr>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">PRODUCT</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">CATEGORY</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">PRICE</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">STOCK</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">SALES</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">STATUS</th>
+                        <th className="text-left p-3 sm:p-4 font-black text-black">ACTIONS</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {filteredProducts.map((product) => (
+                        <tr key={product.id} className="border-b border-gray-200">
+                          <td className="p-3 sm:p-4">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={product.image || "/placeholder.svg"}
+                                alt={product.name}
+                                className="w-10 h-10 sm:w-12 sm:h-12 object-cover border-2 border-black"
+                              />
+                              <div>
+                                <h3 className="text-sm sm:text-base font-black text-black">{product.name}</h3>
+                                <p className="text-xs text-gray-600">ID: {product.id}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.category}</td>
+                          <td className="p-3 sm:p-4 text-sm font-bold text-black">${product.price}</td>
+                          <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.stock}</td>
+                          <td className="p-3 sm:p-4 text-sm font-bold text-black">{product.sales}</td>
+                          <td className="p-3 sm:p-4">
+                            <span
+                              className={`text-xs font-bold px-2 py-1 border border-black ${getStatusColor(product.status)}`}
+                            >
+                              {product.status}
+                            </span>
+                          </td>
+                          <td className="p-3 sm:p-4">
+                            <div className="flex gap-1">
+                              <Button className="bg-blue-400 hover:bg-blue-500 text-black border border-black p-1">
+                                <Eye className="h-3 w-3" />
+                              </Button>
+                              <Button className="bg-yellow-400 hover:bg-yellow-500 text-black border border-black p-1">
+                                <Edit className="h-3 w-3" />
+                              </Button>
+                              <Button className="bg-red-400 hover:bg-red-500 text-black border border-black p-1">
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}

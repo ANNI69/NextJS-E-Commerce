@@ -12,9 +12,9 @@ const categories = [
     name: "CLOTHING",
     description: "Brutal fashion for the bold",
     icon: Shirt,
-    color: "bg-pink-500",
+    color: "bg-lime-400",
     itemCount: 156,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/7LM4VgHX/Chat-GPT-Image-Jul-2-2025-04-21-49-PM.png",
   },
   {
     id: 2,
@@ -23,16 +23,16 @@ const categories = [
     icon: Footprints,
     color: "bg-cyan-400",
     itemCount: 89,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/RZSzXWYT/Chat-GPT-Image-Jul-2-2025-04-03-08-PM.png",
   },
   {
     id: 3,
     name: "ACCESSORIES",
     description: "Complete your brutal look",
     icon: Watch,
-    color: "bg-lime-400",
+    color: "bg-pink-500",
     itemCount: 234,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/pLb36p1S/Chat-GPT-Image-Jul-2-2025-04-24-23-PM.png",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const categories = [
     icon: Headphones,
     color: "bg-orange-400",
     itemCount: 67,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/RFWBz21p/Chat-GPT-Image-Jul-2-2025-04-26-46-PM.png",
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const categories = [
     icon: Gamepad2,
     color: "bg-purple-500",
     itemCount: 123,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/yxhrqTGr/Chat-GPT-Image-Jul-2-2025-04-29-12-PM.png",
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ const categories = [
     icon: ShoppingBag,
     color: "bg-red-500",
     itemCount: 78,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://i.postimg.cc/HW0SkBS6/Chat-GPT-Image-Jul-2-2025-04-30-37-PM.png",
   },
 ]
 
@@ -93,7 +93,7 @@ export default function CategoriesPage() {
                   <img
                     src={category.image || "/placeholder.svg"}
                     alt={category.name}
-                    className="w-full h-32 sm:h-40 object-cover border-2 border-black mb-4"
+                    className="w-full h-50 sm:h-50 object-cover border-2 border-black mb-4"
                   />
 
                   <h3 className="text-xl sm:text-2xl font-black text-black mb-2">{category.name}</h3>
