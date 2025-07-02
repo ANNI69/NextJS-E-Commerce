@@ -102,7 +102,7 @@ export default function Component() {
             </Button>
 
             {/* User Account */}
-            <Link href="/auth">
+            <Link href="/profile">
               <Button className="bg-blue-500 hover:bg-blue-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
                 <User className="h-4 w-4" />
               </Button>
@@ -168,7 +168,7 @@ export default function Component() {
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 CART (3)
               </Button>
-              <Link href="/auth" className="w-full">
+              <Link href="/profile" className="w-full">
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 text-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all py-4 text-lg">
                   <User className="h-5 w-5 mr-2" />
                   ACCOUNT

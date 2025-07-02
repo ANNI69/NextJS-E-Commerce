@@ -6,7 +6,6 @@ import { CartProvider } from './CartContext';
 import { ProductProvider } from './ProductContext';
 import { CheckoutProvider } from './CheckoutContext';
 import { UIProvider } from './UIContext';
-import { WishlistProvider } from './WishlistContext';
 import { OrderProvider } from './OrderContext';
 
 interface AppProvidersProps {
@@ -19,13 +18,11 @@ export function AppProviders({ children }: AppProvidersProps) {
       <AuthProvider>
         <ProductProvider>
           <CartProvider>
-            <WishlistProvider>
               <CheckoutProvider>
                 <OrderProvider>
                   {children}
                 </OrderProvider>
               </CheckoutProvider>
-            </WishlistProvider>
           </CartProvider>
         </ProductProvider>
       </AuthProvider>
@@ -39,4 +36,3 @@ export { useCart } from './CartContext';
 export { useProducts } from './ProductContext';
 export { useCheckout } from './CheckoutContext';
 export { useUI } from './UIContext';
-export { useWishlist } from './WishlistContext';

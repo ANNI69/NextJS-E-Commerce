@@ -37,7 +37,7 @@ export default function SellerLoginPage() {
             console.log("Seller login:", formData)
             setIsLoading(false)
             // Redirect to seller dashboard
-            window.location.href = "/seller/dashboard"
+            window.location.href = "/seller/sellerDashboard"
         }, 2000)
     }
 
@@ -72,15 +72,6 @@ export default function SellerLoginPage() {
             {/* Main Content */}
             <div className="relative z-10 flex items-center justify-center px-4 py-6 sm:py-12">
                 <div className="bg-orange-400 p-4 sm:p-8 border-4 sm:border-8 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] max-w-md w-full">
-                    {/* Logo */}
-                    <div className="text-center mb-6 sm:mb-8">
-                        <div className="flex items-center justify-center gap-3 mb-4">
-                            <Store className="h-8 w-8 sm:h-10 sm:w-10 text-black" />
-                            <h1 className="text-2xl sm:text-3xl font-black text-black">SELLER PORTAL</h1>
-                        </div>
-                        <div className="w-16 sm:w-20 h-1 bg-black mx-auto"></div>
-                    </div>
-
                     {/* Login Form */}
                     <div className="w-full max-w-md">
                         {/* Header */}
@@ -171,40 +162,6 @@ export default function SellerLoginPage() {
                                 {isLoading ? "LOGGING IN..." : "LOGIN TO DASHBOARD"}
                             </Button>
                         </form>
-
-                        {/* Divider */}
-                        <div className="mt-6 sm:mt-8">
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t-2 sm:border-t-4 border-black"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Help Section */}
-                        <div className="mt-6 sm:mt-8 bg-pink-500 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] p-3 sm:p-4">
-                            <h3 className="text-sm sm:text-base font-black text-black mb-2">NEED HELP?</h3>
-                            <div className="space-y-1">
-                                <Link
-                                    href="/seller/support"
-                                    className="block text-xs sm:text-sm font-bold text-black hover:text-white transition-colors"
-                                >
-                                    • SELLER SUPPORT CENTER
-                                </Link>
-                                <Link
-                                    href="/seller/guide"
-                                    className="block text-xs sm:text-sm font-bold text-black hover:text-white transition-colors"
-                                >
-                                    • GETTING STARTED GUIDE
-                                </Link>
-                                <Link
-                                    href="/seller/contact"
-                                    className="block text-xs sm:text-sm font-bold text-black hover:text-white transition-colors"
-                                >
-                                    • CONTACT SELLER TEAM
-                                </Link>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

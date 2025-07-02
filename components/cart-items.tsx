@@ -1,19 +1,9 @@
 "use client"
 
 import { X, Plus, Minus, Trash2, ShoppingBag } from "lucide-react"
-import { useState, useEffect } from "react"
-
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
-
-interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
-  color?: string
-  size?: string
-}
+import { useCart } from "@/context"
 
 interface CartSidebarProps {
   isOpen: boolean
@@ -21,61 +11,7 @@ interface CartSidebarProps {
 }
 
 export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "BRUTAL SNEAKERS",
-      price: 89.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Red",
-      size: "42",
-    },
-    {
-      id: "2",
-      name: "NEON HOODIE",
-      price: 59.99,
-      quantity: 2,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Yellow",
-      size: "L",
-    },
-    {
-      id: "3",
-      name: "CYBER BACKPACK",
-      price: 129.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Black",
-    },
-    {
-      id: "4",
-      name: "BRUTAL T-SHIRT",
-      price: 29.99,
-      quantity: 3,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Green",
-      size: "M",
-    },
-    {
-      id: "5",
-      name: "NEON PANTS",
-      price: 79.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Purple",
-      size: "L",
-    },
-    {
-      id: "6",
-      name: "CYBER JACKET",
-      price: 149.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-      color: "Blue",
-      size: "XL",
-    },
-  ])
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   // Prevent body scroll when cart is open
   useEffect(() => {
@@ -84,26 +20,12 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
     } else {
       document.body.style.overflow = "unset"
     }
-
-    // Cleanup on unmount
     return () => {
       document.body.style.overflow = "unset"
     }
   }, [isOpen])
 
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id)
-      return
-    }
-    setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
-  }
-
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id))
-  }
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const subtotal = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
   const shipping = 9.99
   const total = subtotal + shipping
 
@@ -124,8 +46,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
-          // height: "100vh",
-          height: "100dvh", // Dynamic viewport height for mobile
+          height: "100dvh",
           overscrollBehavior: "contain",
         }}
       >
@@ -167,20 +88,19 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                   {/* Product Image */}
                   <div className="flex-shrink-0">
                     <img
-                      src={item.image || "/placeholder.svg"}
-                      alt={item.name}
+                      src={item.product.image || "/placeholder.svg"}
+                      alt={item.product.name}
                       className="w-16 h-16 sm:w-20 sm:h-20 object-cover border-2 border-black"
                     />
                   </div>
 
                   {/* Product Details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-base sm:text-lg font-black text-black truncate">{item.name}</h3>
+                    <h3 className="text-base sm:text-lg font-black text-black truncate">{item.product.name}</h3>
                     <div className="mt-1 space-y-1">
-                      {item.color && <p className="text-xs sm:text-sm font-bold text-gray-600">Color: {item.color}</p>}
-                      {item.size && <p className="text-xs sm:text-sm font-bold text-gray-600">Size: {item.size}</p>}
+                      {/* Add color/size if needed */}
                     </div>
-                    <p className="text-lg sm:text-xl font-black text-black mt-2">${item.price.toFixed(2)}</p>
+                    <p className="text-lg sm:text-xl font-black text-black mt-2">${item.product.price.toFixed(2)}</p>
                   </div>
                 </div>
 
@@ -188,7 +108,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                 <div className="flex items-center justify-between mt-3 sm:mt-4">
                   <div className="flex items-center space-x-2">
                     <Button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                       className="bg-cyan-400 hover:bg-cyan-500 text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all p-2 sm:p-1 touch-manipulation"
                     >
                       <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -197,7 +117,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                       {item.quantity}
                     </span>
                     <Button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                       className="bg-lime-400 hover:bg-lime-500 text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all p-2 sm:p-1 touch-manipulation"
                     >
                       <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -205,7 +125,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                   </div>
 
                   <Button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeFromCart(item.product.id)}
                     className="bg-red-500 hover:bg-red-600 text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all p-2 touch-manipulation"
                   >
                     <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />

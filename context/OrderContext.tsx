@@ -30,12 +30,8 @@ export function OrderProvider({ children }: OrderProviderProps) {
   const [trackingInfo, setTrackingInfo] = useState<string | null>(null);
   const [orderFilters, setOrderFilters] = useState<Record<string, any>>({});
 
-  // Example: Fetch orders for a user (customer or seller)
   const fetchOrders = useCallback(async (userId: string, filters: Record<string, any> = {}) => {
     try {
-      // Replace with your actual API call
-      // For customers: /api/orders?userId={userId}&status={status}...
-      // For sellers: /api/seller/orders?userId={userId}&status={status}...
       const response = await fetch(`/api/orders?userId=${userId}&${new URLSearchParams(filters)}`);
       if (!response.ok) throw new Error('Failed to fetch orders');
       const data = await response.json();
